@@ -1,0 +1,255 @@
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import Clipboard kivy.core.clipboard.Clipboard
+
+<ScreenOne>:
+    on_enter:
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'dream.jpg'
+    FloatLayout:
+        pos: 0, 0
+        size: root.width, root.height
+        Label:
+            text: 'Code of __ilprofessore'
+            size_hint: 0.1, 0.1
+            pos_hint: {'x': 0.439, 'y': 0.85}
+            font_size: 50
+            color: 1, 0, 0, 1
+            bold: True
+        Button:
+            text: 'Encrypt'
+            size_hint: 0.5, 0.2
+            pos_hint: {'x': 0.25, 'y': 0.5}
+            color: 1, 0, 0.5, 1
+            font_size: 36
+            bold: True
+            on_release:
+                root.manager.transition = FadeTransition(duration = 0.3)
+                root.manager.current = 'screen2'
+
+        Button:
+            text: 'Decrypt'
+            size_hint: 0.5, 0.2
+            pos_hint: {'x': 0.25, 'y': 0.2}
+            color: 1, 0, 0.5, 1
+            font_size: 36
+            bold: True
+            on_release:
+                root.manager.transition = FadeTransition(duration = 0.3)
+                root.manager.current = 'screen3'
+        Button:
+            text: 'exit'
+            size_hint: 0.5, 0.1
+            pos_hint: {'x': 0.25, 'y': 0.05}
+            font_size: 25
+            color: 0, 0, 1, 1
+            bold: True
+            on_release: quit()
+
+<ScreenTwo>:
+    encrypt_input: encrypt_input
+    on_enter: root.clear
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'dream.jpg'
+    FloatLayout:
+        pos: 0, 0
+        size: root.width, root.height
+        TextInput:
+            id: encrypt_input
+            hint_text: 'enter the text to be encrypted.\nno special characters allowed except for . and ,'
+            size_hint: 0.9, 0.5
+            pos_hint: {'x': 0.05, 'y': 0.45}
+            font_size: 20
+            text:
+        Button:
+            pos_hint: {'x': 0.25, 'y': 0.27}
+            size_hint: 0.5, 0.1
+            text: 'Paste'
+            color: 1, 0.5, 0.5, 1
+            font_size: 20
+            bold: True
+            on_release:
+                encrypt_input.text = Clipboard.paste()
+        Button:
+            pos_hint: {'x': 0.25, 'y': 0.17}
+            size_hint: 0.5, 0.1
+            text: 'Submit'
+            color: 1, 0, 0.5, 1
+            font_size: 20
+            bold: True
+            on_release:
+                root.encrypt_submit
+                root.manager.transition = FadeTransition(duration = 0.3)
+                root.manager.current = 'screen4'
+        Button:
+            pos_hint: {'x': 0.25, 'y': 0.07}
+            size_hint: 0.5, 0.1
+            text: 'Back'
+            color: 1, 0, 0, 1
+            font_size: 20
+            bold: True
+            on_release:
+                root.manager.transition = FadeTransition(duration = 0.3)
+                root.manager.current = 'screen1'
+
+<ScreenThree>:
+    decrypt_input: decrypt_input
+    on_enter: root.clear
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'dream.jpg'
+    FloatLayout:
+        pos: 0, 0
+        size: root.width, root.height
+        TextInput:
+            id: decrypt_input
+            hint_text: 'enter the encrypted text to be decrypted.\nthe decrypt is only available in lowercase.'
+            size_hint: 0.9, 0.5
+            pos_hint: {'x': 0.05, 'y': 0.45}
+            font_size: 20
+            text:
+        Button:
+            pos_hint: {'x': 0.25, 'y': 0.27}
+            size_hint: 0.5, 0.1
+            text: 'Paste'
+            color: 1, 0.5, 0.5, 1
+            font_size: 20
+            bold: True
+            on_release:
+                decrypt_input.text = Clipboard.paste()
+        Button:
+            pos_hint: {'x': 0.25, 'y': 0.17}
+            size_hint: 0.5, 0.1
+            text: 'Submit'
+            color: 1, 0, 0.5, 1
+            font_size: 20
+            bold: True
+            on_release:
+                root.decrypt_submit
+                root.manager.transition = FadeTransition(duration = 0.3)
+                root.manager.current = 'screen5'
+        Button:
+            pos_hint: {'x': 0.25, 'y': 0.07}
+            size_hint: 0.5, 0.1
+            text: 'Back'
+            color: 1, 0, 0, 1
+            font_size: 20
+            bold: True
+            on_release:
+                root.manager.transition = FadeTransition(duration = 0.3)
+                root.manager.current = 'screen1'
+
+<ScreenFour>:
+    encrypt_output: encrypt_output
+    on_enter: root.encrypt_set
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'dream.jpg'
+    FloatLayout:
+        pos: 0, 0
+        size: root.width, root.height
+        TextInput:
+            id: encrypt_output
+            hint_text: 'the encrypted text will be shown here.'
+            size_hint: 0.9, 0.5
+            pos_hint: {'x': 0.05, 'y': 0.45}
+            font_size: 20
+            text:
+        Button:
+            pos_hint: {'x': 0.25, 'y': 0.27}
+            size_hint: 0.5, 0.1
+            text: 'Copy'
+            color: 1, 0.5, 0.5, 1
+            font_size: 20
+            bold: True
+            on_release: Clipboard.copy(encrypt_output.text)
+        Button:
+            pos_hint: {'x': 0.25, 'y': 0.07}
+            size_hint: 0.5, 0.1
+            text: 'Home'
+            color: 1, 0, 0.5, 1
+            font_size: 20
+            bold: True
+            on_release:
+                root.manager.transition = FadeTransition(duration = 0.3)
+                root.manager.current = 'screen1'
+
+<ScreenFive>:
+    decrypt_output: decrypt_output
+    on_enter: root.decrypt_set
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'dream.jpg'
+    FloatLayout:
+        pos: 0, 0
+        size: root.width, root.height
+        TextInput:
+            id: decrypt_output
+            hint_text: 'the decrypted text will be shown here.'
+            size_hint: 0.9, 0.5
+            pos_hint: {'x': 0.05, 'y': 0.45}
+            font_size: 20
+            text:
+        Button:
+            pos_hint: {'x': 0.25, 'y': 0.27}
+            size_hint: 0.5, 0.1
+            text: 'Copy'
+            color: 1, 0.5, 0.5, 1
+            font_size: 20
+            bold: True
+            on_release: Clipboard.copy(decrypt_output.text)
+        Button:
+            pos_hint: {'x': 0.25, 'y': 0.07}
+            size_hint: 0.5, 0.1
+            text: 'Home'
+            color: 1, 0, 0.5, 1
+            font_size: 20
+            bold: True
+            on_release:
+                root.manager.transition = FadeTransition(duration = 0.3)
+                root.manager.current = 'screen1'
+
+<Manager>:
+    id: screen_manager
+
+    screen_one: screen_one
+    screen_two: screen_two
+    screen_three: screen_three
+    screen_four: screen_four
+    screen_five: screen_five
+
+    ScreenOne:
+        id: screen_one
+        name: 'screen1'
+        manager: screen_manager
+
+    ScreenTwo:
+        id: screen_two
+        name: 'screen2'
+        manager: screen_manager
+
+    ScreenThree:
+        id: screen_three
+        name: 'screen3'
+        manager: screen_manager
+
+    ScreenFour:
+        id: screen_four
+        name: 'screen4'
+        manager: screen_manager
+
+    ScreenFive:
+        id: screen_five
+        name: 'screen5'
+        manager: screen_manager
